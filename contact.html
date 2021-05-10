@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Contact Us at Friends Coffee</title>
+<meta http-equiv="Content-Type" content=text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="base.css"/>
+<link rel="stylesheet" type="text/css" href="style1.css"/>
+<link rel="stylesheet" type="text/css" href="layout_style.css"/>
+<link rel="stylesheet" type="text/css" href="style_table_form.css"/>
+<link rel="stylesheet" type="text/css" href="navicon.css"/>
+
+<style>
+input:invalid, select:invalid, textarea:invalid {
+border-color: #900;
+text-shadow: 2px 2px 5px #e99;
+}
+
+.error {
+border-color: #900;
+background-color: #FDD;
+padding: 10px;
+width: 400px;
+}
+</style>
+
+<script defer>
+var pname, subject, email, rb, topic, subject, question;
+
+window.onload = function() {
+pname = document.getElementById("name");
+subject = document.getElementById("subject");
+email = document.getElementById("email");
+topic = document.getElementById("topic");
+subject = document.getElementById("subject");
+question = document.getElementById("question");
+rb = document.getElementsByName("mList");
+
+email.addEventListener("input", validateEmail);
+
+pname.addEventListener("input", function (e) {
+validateText(pname);
+});
+
+
+subject.addEventListener("input", function (e) {
+validateText(subject);
+});
+
+
+question.addEventListener("input", function (e) {
+validateText(question);
+});
+
+topic.addEventListener("change", validateTopic);
+
+
+for (i = 0; i < rb.length; i++) {
+rb[i].addEventListener("click", validateMailingList);
+}
+
+var submit = document.querySelector("input[type=submit]");
+submit.addEventListener("click", validateAll);
+}
+
+
+function validateText(elem) {
+var message = "";
+var elem_name = elem.name;
+
+if (elem.value.length < 1) {
+message = "You must enter a " + elem_name + "!";
+}
+else if (elem.validity.tooShort) {
+message = "Your" + elem_name + " is too short!";
+}
+
+elem.setCustomValidity(message);
+elem.title = message;
+return message;
+}
+
+
+function validateEmail(email) {
+var message = "";
+if (email.value.length <=0){
+email.setCustomValidity("You need to provide an email!");
+}
+else if (email.validity.typeMismatch){
+email.setCustomValidity("This doesn't seem to be an email.");
+}
+else if (email.validity.patternMismatch){
+email.setCustomValidity("You may have a typo in your email!");
+}
+email.title = email.validationMessage;
+return email.validationMessage;
+}
+
+function validateTopic(e) {
+var message = "";
+if (topic.selectedIndex == 0) {
+message= "Select an question topic!"
+}
+topic.setCustomValidity(message);
+topic.title =  message;
+return message;
+}
+
+function validateMailingList(e) {
+var message = "";
+var checked = document.querySelector("input[name='mList']:checked");
+if (checked == null) {
+message = "You must decide whether you want to be on our mailing list!";
+}
+
+rb.forEach(function(elem){
+elem.title = message;
+elem.setCustomValidity(message);
+});
+return message;
+}
+
+
+function validateAll(e) {
+var message = ""
+message += validateText(pname);
+message += validateText(email);
+message += validateTopic(topic);
+message += validateText(subject);
+message += validateText(question);
+message += validateMailingList(rb);
+
+var error = document.getElementById("error");
+if (message.length > 0) {
+message = message.replace(/\!/g, ".<br>");
+error.innerHTML = message;
+error.className = "error";
+}
+}
+
+
+</script>
+
+
+</head>
+<body>
+<div id="layout">
+<header>
+         <h1>
+         Friends Coffee
+         </h1>
+         <h4>
+         A cup of coffee is like a friendship...
+         </h4>
+       
+       <!-- company nane and tagline go here -->
+</header>
+<nav>
+<a id="navicon" href="#"><img src="navicon.png" width="32px" /></a>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="products.html">Our Coffee & Espresso</a></li>
+            <li><a href="cart.html">Cart</a></li>
+          </ul><!-- links for menu go here -->
+</nav>
+<section> <h2> Contact Us </h2></section>
+
+<main>
+<p>* indicates required information</p>
+
+<div class="error"></div>
+<form name="contactForm" id="contactForm"
+action="thankyou.html"
+method="get" >
+<div id="error"></div>
+
+
+<fieldset id="contactFields">
+
+<legend>Contact Information</legend>
+
+<div class="formRow">
+<label for="name">Name<span>*</span></label>
+<input type="text" name="name" id="name" minlength="2"/>
+</div>
+
+<div class="formRow">
+<label for="email">Email Address<span>*</span></label>
+<input type="text" id="email" name="email" pattern="^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$" />
+</div>
+
+<div class="formRow">
+<label for="phone">Phone</label>
+<input type="tel" name="phone" id="phone"
+pattern="^([0-9]( |-)?)?(?[0−9]3?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$" />
+</div>
+
+ </fieldset>
+
+<fieldset id="request">
+<legend>Information Request</legend>
+
+<div class="formRow">
+<label class="blockLabel" for="topic">Request Topic <span>*</span></label>
+<select id="topic" name="topic">
+
+<option value="">Select a topic</option>
+<option value="coffee info">Coffee Purchase Information</option>
+<option value="recent">Recent Purchase</option>
+<option value="website">Website</option>
+<option value="other">All Other Questions</option>
+</select>
+</div>
+
+<div class="formRow">
+<label for="subject">Subject<span>*</span></label>
+<input type="text" name="subject" id="subject" minlength="5" />
+</div>
+
+<label for="question" name="blockLabel">Ask us your Question:<span>*</span></label>
+
+<textarea id="question" name"question" rows="5" cols="55" minlength="15"></textarea>
+</fieldset>
+
+<fieldset id="mailList">
+<legend>Do you want to be on our mailing list?"</legend>
+
+<label for="mYes">Yes</label>
+<input type="radio" id="mYes" name="mList" value="yes" />
+<label for="mNo">No</label>
+<input type="radio" id="mNo" name="mList" value="no" />
+
+</fieldset>
+
+<input type="submit" value="Submit Question" id="submit"/>
+<input type="reset" value="Cancel" id="reset"/>
+
+</form>
+
+</main>
+<footer>
+<p>
+      Copyright 2021 by Ana De Leon
+      </p>
+         <!-- Footer information should include your name and a copyright statement.-->
+</footer>
+</div>
+</body>
+</html>

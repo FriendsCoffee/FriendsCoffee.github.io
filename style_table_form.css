@@ -1,0 +1,102 @@
+main#grid-area {
+display: grid;
+grid-gap: 50px;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+article img {
+display:block;
+margin: auto;
+}
+
+article table {
+margin: auto;
+background-size: 120px 120px;
+}
+
+article {
+background-color: white;
+background-size: 120px 120px;
+border-radius: 20px;
+}
+
+tfoot td {
+text-align:center;
+}
+
+caption {
+font-weight:bold;
+}
+
+#layout, main {
+background-color: #efefef;
+}
+
+
+
+
+
+fieldset, select {
+margin-bottom: 10px;
+padding: 5px;
+background-color: #cc7e7e;
+border-color: brown;
+} 
+
+fieldset span {
+color: red;
+}
+
+
+div.formRow {
+display: flex;
+flex-flow: row wrap;
+margin: 7px;
+}
+
+div.formRow label {
+width: 150px;
+}
+
+#name, #email, #subject, select  {
+width: 250px;
+}
+
+#phone {
+width: 150px;
+}
+
+#mailList, textarea {
+width: 95%;
+max-width: 450px;
+padding: 5px;
+margin-top: 10px;
+
+}
+
+.blockLabel {
+display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
